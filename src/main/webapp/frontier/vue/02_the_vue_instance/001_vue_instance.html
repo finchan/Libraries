@@ -1,0 +1,59 @@
+<script src="../../../js/vue/vue.js"></script>
+<div id="example"></div>
+<script>
+    //Constructor Pattern 1
+    var vm = new Vue({
+       //options
+    });
+
+    //Constructor Pattern 2
+    var MyComponent = Vue.extend({
+        //extension options
+    });
+    var myComponentInstance = new MyComponent( );
+
+    //Properties and Methods
+    //Each Vue instance proxies all the properties found in its data object:
+    var data = {a: 1};
+    var vm1 = new Vue({
+        data: data
+    });
+    console.log(vm1.a === data.a);
+    vm1.a = 2;
+    console.log(data.a);
+    data.a = 3;
+    console.log(vm1.a);
+
+    //Note: It should be noted that only these proxied properties are reactive.
+    // If you attach a new property to the instance after it has been created,
+    // it will not trigger any view updates.
+
+    //In addition to data properties, Vue instances expose a number of useful
+    // instance properties and methods. These properties and methods are prefixed
+    // with $ to differentiate them from proxied data properties.
+    var data2 = {a: 1};
+    var vm2 = new Vue({
+        el: "#example",
+        data: data2
+    });
+    console.log(vm2.$data === data2);
+    console.log(vm2.$el === document.getElementById('example'));
+    vm2.$watch('a', function (newVal, oldVal){
+        // this callback will be called when 'vm2.a' changes
+        //Don’t use arrow functions on an instance property or callback
+        console.log('oldVal: ' + oldVal + " newVal: " + newVal);
+    })
+    vm2.a = 5;
+
+    //Instance Lifecycle Hooks
+    var vm = new Vue({
+        data: {
+            a: 1
+        },
+        created: function () {
+            // `this` points to the vm instance
+            console.log('a is: ' + this.a)
+        }
+    })
+
+</script>

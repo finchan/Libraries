@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>_filter</title>
+    <script src="../../../js/underscore/underscore.js"></script>
+    <script src="../../../js/common/util.js"></script>
+</head>
+<body>
+<script>
+    function complement(pred) {
+        return function ( ) {
+            debugger;
+            return !pred.apply(null, _.toArray(arguments));
+        };
+    }
+
+    var result = _.filter(['a', 'b', 'c', 3], complement(_.isNumber));
+
+    p(result);
+</script>
+</body>
+</html>

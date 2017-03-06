@@ -1,0 +1,187 @@
+<script src="../../../js/common/util.js"></script>
+<script src="../../../js/vue/vue.js"></script>
+<style>
+    body, pre{
+        font-family: calibri;
+    }
+</style>
+<h1>Basic Usage</h1>
+<ul id="example1">
+    <li v-for="item in items">
+        {{item.message}}
+    </li>
+</ul>
+
+<div>Inside v-for blocks we have full access to parent scope properties. </div>
+<ul id="example2">
+    <li v-for="(item, index) in items">
+        {{ parentMessage }} - {{ index }} - {{ item.message }}
+    </li>
+</ul>
+
+<ul id="example3">
+    <template v-for="item in items">
+        <li>{{item.message}}</li>
+        <li class="divider"></li>
+    </template>
+</ul>
+
+<div>You can also use v-for to iterate through the properties of an object.
+    When iterating over an object, the order is based on the key enumeration
+    order of Object.keys(), which is not guaranteed to be consistent across JavaScript
+    engine implementations.</div>
+
+<div id="repeat-object">
+    <ul>
+        <li v-for="value in object">
+            {{value}}
+        </li>
+    </ul>
+
+    <ul>
+        <li v-for="(value, key) in object">
+            {{key}} - {{value}}
+        </li>
+    </ul>
+
+    <div v-for="(value, key, index) in object">
+        {{ index }}. {{ key }} : {{ value }}
+    </div>
+</div>
+
+<div>v-for can also take an integer. In this case it will repeat the template that many times.</div>
+<div id="example5">
+    el is essential when using template {{}}
+    <span v-for="n in 10">{{n}}</span>
+</div>
+
+<h1>Array Change Detection - Mutation Methods</h1>
+<pre>
+Vue wraps an observed array’s mutation methods so they will also trigger view updates. The wrapped methods are:
+push()
+pop()
+shift()
+unshift()
+splice()
+sort()
+reverse()
+You can open the console and play with the previous examples’ items array by calling their mutation methods. For example: example1.items.push({ message: 'Baz' }).
+</pre>
+
+<div>
+    Replacing an Array - there are also non-mutating methods, e.g. filter(), concat() and slice(),
+    which do not mutate the original Array but always return a new array.
+    When working with non-mutating methods, you can just replace the old array
+    with the new one.
+    <pre>
+        example1.items = example1.items.filter(function (item) {
+          return item.message.match(/Foo/)
+        })
+    </pre>
+</div>
+
+<div>
+    <h1>Caveats</h1>
+    <pre>
+        Due to limitations in JavaScript, Vue cannot detect the following changes to an array:
+        1. When you directly set an item with the index, e.g. vm.items[indexOfItem] = newValue
+        2. When you modify the length of the array, e.g. vm.items.length = newLength
+
+        To overcome caveat 1, both of the following will accomplish the same as vm.items[indexOfItem] = newValue, but will also trigger state updates in the reactivity system:
+        // Vue.set
+        Vue.set(example1.items, indexOfItem, newValue)
+        // Array.prototype.splice`
+        example1.items.splice(indexOfItem, 1, newValue)
+        To deal with caveat 2, you can also use splice:
+        example1.items.splice(newLength)
+    </pre>
+</div>
+
+<div>
+    <h1>Displaying Filtered/Sorted Results</h1>
+    Sometimes we want to display a filtered or sorted version of an array without actually mutating or resetting the original data. In this case, you can create a computed property that returns the filtered or sorted array.
+    <ul id="computedFilter">
+        <li v-for="n in evenNumbers">{{n}}</li>
+    </ul>
+    Alternatively, you can also just use a method where computed properties are not feasible
+    <ul id="methodFilter">
+        <li v-for="n in evenNumbers()">{{n}}</li>
+    </ul>
+</div>
+
+
+<script>
+    var example1 = new Vue({
+       el: '#example1',
+        data:{
+            items: [
+                {message: 'Foo'},
+                {message: 'Bar'}
+            ]
+        }
+    });
+
+    var example2 = new Vue({
+        el: '#example2',
+        data:{
+            parentMessage: 'Parent',
+            items: [
+                {message: 'Foo'},
+                {message: 'Bar'}
+            ]
+        }
+    });
+
+    var example3 = new Vue({
+        el: '#example3',
+        data:{
+            parentMessage: 'Parent',
+            items: [
+                {message: 'Foo'},
+                {message: 'Bar'}
+            ]
+        }
+    });
+
+    var example4 = new Vue({
+        el: '#repeat-object',
+        data: {
+            object: {
+                FirstName: 'John',
+                LastName: 'Doe',
+                Age: 30
+            }
+        }
+    });
+
+    var example5 = new Vue({
+       el: '#example5'
+    });
+
+    var computedFilter = new Vue({
+       el: '#computedFilter',
+        data: {
+            numbers: [1, 2, 3, 4, 5]
+        },
+        computed: {
+            evenNumbers: function() {
+                return this.numbers.filter( function(num) {
+                    return num % 2 === 0;
+                })
+            }
+        }
+    });
+    var methodFilter = new Vue({
+       el: '#methodFilter',
+        data: {
+            numbers: [1, 2, 3, 4, 5]
+        },
+        methods: {
+            evenNumbers: function() {
+                return this.numbers.filter(function(num){
+                   return num % 2 === 0;
+                });
+            }
+        }
+    });
+</script>

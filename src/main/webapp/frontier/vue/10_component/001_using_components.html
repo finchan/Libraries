@@ -1,0 +1,443 @@
+<script src="../../../js/common/util.js"></script>
+<script src="../../../js/vue/vue.js"></script>
+<style type="text/css">
+    @import url('../../../css/common.css');
+</style>
+<div id="container" class="container">
+    <h1>Registration a Component</h1>
+    <code>
+        To register a global component, you can use Vue.component(tagName, options);
+        Once registered, a component can be used in an instance’s template as a custom element,
+        Make sure the component is registered before you instantiate the root Vue instance.
+    </code>
+    <div id="example" class="comp">
+        <my-component></my-component>
+    </div>
+    <h1>Local Registration</h1>
+    <code>You can make a component available only in the scope of another instance/component by registering it with the components instance option:</code>
+    <div id="example2" class="comp">
+        <my-component2></my-component2>
+    </div>
+    <h1>DOM Template Parsing Caveats</h1>
+    <code>Most notably, some elements such as &lt;ul&gt;, &lt;ol&gt;, &lt;table&gt; and &lt;select&gt;
+        have restrictions on what elements can appear inside them, and some elements such as &lt;option&gt; can only appear
+        inside certain other elements. A workaround is to use the <b>is</b> special attribute.</code>
+    <div id="example3">
+        <table>
+            <!--<trstring></trstring>-->
+            <tr is="trstring"></tr>
+        </table>
+    </div>
+    <h1>Data must be a Function</h1>
+    <code>most of the options that can be passed into the Vue constructor can be used in a component, with one special case: data must be function. </code>
+    <div id="example4">
+        <simple-counter></simple-counter>
+        <simple-counter></simple-counter>
+        <simple-counter></simple-counter>
+    </div>
+    <h1>Composing Components</h1>
+    <code>In Vue.js, the parent-child component relationship can be summarized as props down, events up. The parent passes data down to the child via props, and the child sends messages to the parent via events.</code>
+    <h1>Passing Data with Props</h1>
+    <code>A prop is a custom attribute for passing information from parent components. A child component needs to explicitly declare the props it expects to receive using the props option</code>
+
+    <div id="example5">
+        <child5 message="Hello!"></child5>
+    </div>
+
+    <h1>camelCase vs. kebab-case</h1>
+    <code style="color: red">HTML attributes are case-insensitive, so when using non-string templates, camelCased prop names need to use their kebab-case (hyphen-delimited) equivalents:</code>
+    <div id="example6">
+        <child6 my-message="World!"></child6>
+    </div>
+
+    <h1>Dynamic Props</h1>
+    <code>We can also use v-bind for dynamically binding props to data on the parent. Whenever the data is updated in the parent, it will also flow down to the child</code>
+    <div id="example7">
+        <input v-model="parentMsg">
+        <br>
+        <child7 v-bind:my-message7="parentMsg"></child7>
+    </div>
+
+    <h1>One-Way Data Flow</h1>
+    <code>There are usually two cases where it’s tempting to mutate a prop:
+    <br>
+        1. The prop is used to only pass in an initial value, the child component simply wants to use it as a local data property afterwards;
+        <br>
+        2. The prop is passed in as a raw value that needs to be transformed.<br>
+        The proper answer to these use cases are:<br>
+        1. Define a local data property that uses the prop’s initial value as its initial value:<br>
+        2. Define a computed property that is computed from the prop’s value:
+        <br>
+        Note that objects and arrays in JavaScript are passed by reference, so if the prop is an array or object, mutating the object or array itself inside the child will affect parent state.
+    </code>
+    <div id="example8">
+        <child8 initial-counter="9"></child8>
+    </div>
+
+    <div id="example9">
+        <child9 size="alphabet"></child9>
+    </div>
+
+    <h1>Prop Validation</h1>
+    <code>
+        Instead of defining the props as an array of strings, you can use an object with validation requirements:<br>
+        The type can be one of the following native constructors:
+        String,
+        Number,
+        Boolean,
+        Function,
+        Object,
+        Array<br>In addition, type can also be a custom constructor function and the assertion will be made with an instanceof check.
+        When a prop validation fails, Vue will produce a console warning (if using the development build).
+    </code>
+
+    <h1>Custom Events</h1>
+    <code>We have learned that the parent can pass data down to the child using props, but how do we communicate back to the parent when something happens? This is where Vue’s custom event system comes in.</code>
+    <h1>Using v-on with Custom Events</h1>
+    <code>Every Vue instance implements an events interface, which means it can:
+    <br>
+        <ul>
+            <li>Listen to an event using $on(eventName)</li>
+            <li>Trigger an event using $emit(eventName)</li>
+        </ul>
+        In addition, a parent component can listen to the events emitted from a child component using v-on directly in the template where the child component is used. You cannot use $on to listen to events emitted by children. You must use v-on directly in the template.
+        <br>
+        There may be times when you want to listen for a native event on the root element of a component. In these cases, you can use the .native modifier for v-on.
+    </code>
+    <div id="counter-event-example">
+        <p>{{total}}</p>
+        <!--<button-counter v-on:click.native="incrementTotal"></button-counter>-->
+        <button-counter v-on:increment="incrementTotal"></button-counter>
+        <button-counter v-on:increment="incrementTotal"></button-counter>
+    </div>
+
+    <h1>Form Input Components using Custom Events</h1>
+    <code>Custom events can also be used to create custom inputs that work with v-model. .<br>
+        So for a component to work with v-model, it must:
+        <ul>
+            <li>
+                accept a value prop
+            </li>
+            <li>
+                emit an input event with the new value
+            </li>
+        </ul>
+    </code>
+
+    <div id="example11">
+        <code style="color: red;font-size: 40px;">I CANNOT UNDERSTAND THIS SAMPLE, WILL READ IT LATER!!!</code>
+        <currency-input v-model="value"></currency-input>
+    </div>
+
+    <h1>Non Parent-Child Communication</h1>
+    <code>Sometimes two components may need to communicate with one-another but they are not parent/child to each other. In simple scenarios, you can use an empty Vue instance as a central event bus - A comp method $emit -> B comp create hook $on</code>
+    <div id="example12">
+        <comp1></comp1>
+        <comp2></comp2>
+    </div>
+
+    <h1>Compilation Scope</h1>
+    <code>Everything in the parent template is compiled in parent scope; everything in the child template is compiled in child scope.. If you need to bind child-scope directives on a component root node, you should do so in the child component’s own template.</code>
+
+
+    <h1>Single Slot</h1>
+    <code>Anything originally inside the <slot> tags is considered fallback content. Fallback content is compiled in the child scope and will only be displayed if the hosting element is empty and has no content to be inserted.</code>
+    <div id="example13">
+        <h1>I'm the parent title</h1>
+        <singleslot>
+            <p>This is some original content</p>
+            <p>This is some more original content</p>
+        </singleslot>
+    </div>
+
+    <h1>Named Slots</h1>
+    <code>
+        &lt;slot&gt; elements have a special attribute, name, which can be used to further customize how content should be distributed. You can have multiple slots with different names. A named slot will match any element that has a corresponding slot attribute in the content fragment.
+            There can still be one unnamed slot, which is the default slot that serves as a catch-all outlet for any unmatched content. If there is no default slot, unmatched content will be discarded.
+    </code>
+    <div id="example14">
+        <app-layout>
+            <h1 slot="header">Here might be a page title</h1>
+            <p>A paragraph for the main content.</p>
+            <p>And another one.</p>
+            <p slot="footer">Here's some contact info.</p>
+        </app-layout>
+    </div>
+
+    <h1>Scoped Slots</h1>
+    <code>In a child component, simply pass data into a slot as if you are passing props to a component. In the parent, a &lt;template&gt; element with a special attribute scope indicates that it is a template for a scoped slot. The value of scope is the name of a temporary variable that holds the props object passed from the child:</code>
+    <div id="example15">
+        <childslot>
+            <template scope="props">
+                <span>Hello from Parent - Example15</span>
+                <br>
+                <span>{{props.text}}</span>
+            </template>
+        </childslot>
+    </div>
+</div>
+<script>
+    //Global Component
+    Vue.component('my-component', {
+       template: '<div>A Custom Component!</div>'
+    });
+    var vm1 = new Vue({
+        el: '#example'
+    })
+
+    //Local Component
+    var child = {
+        template: '<div>A custom component!</div>'
+    };
+    var vm2 = new Vue({
+        el: '#example2',
+       components: {
+           'my-component2': child
+       }
+    });
+    //
+    var trstringTemplate = {
+        template: '<tr>Hello</tr>'
+    }
+    var vm3 = new Vue({
+        el: '#example3',
+        components: {
+            'trstring': trstringTemplate
+        }
+    })
+    var data = {
+        counter: 0
+    };
+    Vue.component('simple-counter', {
+        template: '<button v-on:click="counter+=1">{{counter}}</button>',
+        data: function () {
+//            return data;
+            return {
+                counter:0
+            }
+        }
+    });
+    var vm4 = new Vue({
+        el: '#example4'
+    });
+
+    Vue.component('child5', {
+        props:['message'],
+        template: '<span>{{message}}</span>'
+    });
+    var vm5 = new Vue({
+        el: '#example5'
+    })
+
+    Vue.component('child6', {
+        props: ['myMessage'],
+        template: '<span>{{myMessage}}</span>'
+    });
+    var vm6 = new Vue({
+        el: '#example6'
+    });
+    Vue.component('child7', {
+        props: ['myMessage7'],
+        template: '<span>{{myMessage7}}</span>'
+    });
+    var vm7 = new Vue({
+        el: '#example7',
+        data: {
+            parentMsg:''
+        }
+    });
+
+    Vue.component('child8', {
+        props: ['initialCounter'],
+        data: function () {
+            return {
+                count: this.initialCounter
+            }
+        },
+        template: '<span>{{count}}</span>'
+    });
+    var vm8 = new Vue({
+       el: '#example8',
+        data: {
+            initialCounter: 0
+        }
+    });
+
+    Vue.component('child9', {
+        props: ['size'],
+        computed: {
+            normalizedSize: function() {
+                return this.size.trim().toUpperCase();
+            }
+        },
+        template: '<span>{{normalizedSize}}</span>'
+    })
+    var vm9 = new Vue({
+        el: '#example9',
+        data: {
+            size: ''
+        }
+    });
+
+    Vue.component('example10', {
+        props: {
+            // basic type check (`null` means accept any type)
+            propA: Number,
+            // multiple possible types
+            propB: [String, Number],
+            propC: {
+                type: String,
+                required: true
+            },
+            propD: {
+                type: Number,
+                default: 100
+            },
+            // object/array defaults should be returned from a
+            // factory function
+            propE: {
+                type: Object,
+                default: function() {
+                    return {message: 'Hello'}
+                }
+            },
+            // custom validator function
+            propF: {
+                validator: function(value) {
+                    return value > 10;
+                }
+            }
+        }
+    });
+
+    Vue.component('button-counter', {
+        template: '<button v-on:click="increment">{{counter}}</button>',
+        data: function () {
+            return {
+                counter: 0
+            }
+        },
+        methods: {
+            increment: function() {
+                this.counter +=1;
+                this.$emit('increment');
+            }
+        }
+    });
+    var vm10 = new Vue({
+        el: '#counter-event-example',
+        data: {
+            total: 0
+        },
+        methods: {
+            incrementTotal: function( ) {
+                this.total += 1;
+            }
+        }
+    });
+
+    Vue.component('currency-input', {
+        template: '\
+        <span>\
+          $\
+          <input\
+            ref="input"\
+            v-bind:value="value"\
+            v-on:input="updateValue($event.target.value)"\
+          >\
+        </span>\
+      ',
+        props: ['value'],
+        methods: {
+            updateValue: function (value) {
+                var formattedValue = value
+                        .trim()
+                        .slice(0, value.indexOf('.') + 3)
+                if (formattedValue !== value) {
+                    this.$refs.input.value = formattedValue
+                }
+                this.$emit('input', Number(formattedValue));
+            }
+        }
+    });
+
+    var vm11 = new Vue({
+        el: '#example11',
+        data: {
+            value: null
+        }
+    });
+
+    var bus = new Vue();
+
+    Vue.component("comp1", {
+        template: '<div v-on:click="comp1Click" style="overflow:hidden;width: 20px;height:20px; background-color:#336699"></div>',
+        methods: {
+            comp1Click: function() {
+                console.debug("comp1-click");
+                // in component A's method
+                bus.$emit('comp1-click');
+            }
+        }
+    });
+
+    Vue.component("comp2", {
+        template: '<div style="overflow:hidden;width: 20px;height:20px; background-color:#996633"></div>',
+        created: function() {
+            // in component B's created hook
+            bus.$on('comp1-click', function(){
+                alert(1);
+            });
+        }
+    })
+    var vm12 = new Vue({
+        el: '#example12'
+    });
+
+    Vue.component('singleslot', {
+        template: '\
+        <div>\
+            <h1>I\'m the child title</h1>\
+            <slot>\
+                This will only be displayed if there is no content to be distributed.\
+            </slot>\
+         </div>\
+         '
+    });
+    var vm13 = new Vue({
+        el: '#example13'
+    });
+
+    Vue.component('app-layout', {
+        template: '\
+        <div class="container">\
+            <header>\
+                <slot name="header"></slot>\
+            </header>\
+            <main>\
+                <slot></slot>\
+            </main>\
+            <footer>\
+                <slot name="footer"></slot>\
+            </footer>\
+        </div>\
+        '
+    });
+    var vm14 = new Vue({
+        el: '#example14'
+    });
+
+    var childslot = Vue.component('childslot', {
+       template: '\
+       <div>\
+            <slot text="hello from child">\
+            <slot>\
+       </div>\
+       '
+    });
+    var vm15 = new Vue({
+        el: '#example15'
+    });
+</script>
+
+

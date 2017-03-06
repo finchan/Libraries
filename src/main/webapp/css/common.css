@@ -1,0 +1,11 @@
+.container{
+    font-family: calibri;
+}
+.container code{
+    font-family:calibri;
+}
+
+.container .comp{
+    border: solid #00009C 1px;
+    width: auto;
+}

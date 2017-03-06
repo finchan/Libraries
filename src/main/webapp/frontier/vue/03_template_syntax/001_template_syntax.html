@@ -1,0 +1,27 @@
+<script src="../../../js/common/util.js"></script>
+<script src="../../../js/vue/vue.js"></script>
+
+<div :style="divStyle" id="container">
+    <p>{{message | formatter("uppercase", 3 )}}</p>
+</div>
+
+<script>
+    var vue = new Vue({
+       el: "#container",
+        data: {
+            message: 'Hello World!',
+            divStyle: 'width: 200px; height: 100px; overflow:hidden; border: 1px ridge #000000; margin: auto;text-align: center;'
+        },
+        filters: {
+            formatter: function(value, arg1, arg2) {
+                if (arg1 == 'uppercase') {
+                    if(arg2) {
+                         return value.substr(0, arg2).toUpperCase();
+                    }
+                    return "";
+                }
+                return "";
+            }
+        }
+    });
+</script>

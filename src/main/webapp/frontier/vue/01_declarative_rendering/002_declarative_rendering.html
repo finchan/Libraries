@@ -1,0 +1,16 @@
+<script src="../../../js/vue/vue.js"></script>
+<div id="app-2">
+  <span v-bind:title="message">
+    Hover your mouse over me for a few seconds to see my dynamically bound title!
+  </span>
+</div>
+<script>
+    //The v-bind attribute you are seeing is called a directive. Directives are prefixed with v- to indicate that
+    // they are special attributes provided by Vue, and they apply special reactive behavior to the rendered DOM.
+    var app2 = new Vue({
+        el: '#app-2',
+        data: {
+            message: 'You loaded this page on ' + new Date()
+        }
+    })
+</script>

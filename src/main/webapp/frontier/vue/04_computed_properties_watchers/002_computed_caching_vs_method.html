@@ -1,0 +1,45 @@
+<script src="../../../js/common/util.js"></script>
+<script src="../../../js/vue/vue.js"></script>
+<div id="example">
+    <p>Original message: "{{ message }}"</p>
+    <p>Computed reversed message: "{{ reverseMessage( ) }}"</p>
+    <p>Time - Computed: {{computedTime}}</p>
+    <p>Time - Method: {{methodTime()}}</p>
+</div>
+<script>
+    /***********************************************************
+     *Instead of a computed property, we can define the same function as
+     * a method instead. For the end result, the two approaches are indeed
+     * exactly the same. However, the difference is that computed properties
+     * are cached based on their dependencies. A computed property will only
+     * re-evaluate when some of its dependencies have changed. This means
+     * as long as message has not changed, multiple access to the reversedMessage
+     * computed property will immediately return the previously
+     * computed result without having to run the function again.
+     * In comparison, a method invocation will always run the function whenever a re-render happens.
+     **********************************************************/
+    var vue = new Vue({
+       el: '#example',
+        data:{
+            message: 'Hello'
+        },
+        computed: {
+            computedTime: function ( ) {
+                return Date.now( );
+            }
+        },
+        methods: {
+            reverseMessage: function ( ) {
+                return this.message.split('').reverse().join('');
+            },
+            methodTime: function( ) {
+                return Date.now();
+            }
+        }
+    });
+
+    setInterval( function() {
+        console.debug(vue.computedTime + "\t" +vue.methodTime());
+    }, 1000);
+
+</script>

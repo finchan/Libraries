@@ -1,0 +1,28 @@
+<script src="../../../js/common/util.js"></script>
+<script src="../../../js/vue/vue.js"></script>
+<div id="demo">{{firstName}} {{lastName}} {{fullName}}</div>
+<script>
+    //Computed properties are by default getter-only, but you can also provide a setter when you need it:
+    //Now when you run vm.fullName = 'John Doe', the setter will be invoked and
+    // vm.firstName and vm.lastName will be updated accordingly.
+    var vm = new Vue ({
+       el: '#demo',
+        data: {
+            firstName: 'Xavier',
+            lastName: 'Ding'
+        },
+        computed: {
+            fullName: {
+                get: function() {
+                    return this.firstName + ' ' + this.lastName;
+                },
+                set: function(val) {
+                    this.firstName = val.split(' ')[0];
+                    this.lastName = val.split(' ')[1];
+                }
+            }
+        }
+    });
+    vm.fullName = 'Javier Tin';
+    console.log(vm.fullName);
+</script>

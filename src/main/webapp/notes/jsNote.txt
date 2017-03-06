@@ -1,0 +1,2 @@
+1. call([thisObj[,arg1[, arg2[,   [,.argN]]]]])
+2. apply([thisObj[,argArray]])

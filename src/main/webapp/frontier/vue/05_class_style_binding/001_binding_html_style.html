@@ -1,0 +1,32 @@
+<script src="../../../js/common/util.js"></script>
+<script src="../../../js/vue/vue.js"></script>
+<div id="vuestyle">
+    <div v-bind:style="{fontFamily: 'calibri', color: activeColor, 'font-size': fontSize + 'px'}">
+        The object syntax for v-bind:style is pretty straightforward -
+        it looks almost like CSS, except it’s a JavaScript object.
+        You can use either camelCase or kebab-case for the CSS property names:
+    </div>
+    <div v-bind:style="styleObject">
+        It is often a good idea to bind to a style object directly so that the template is cleaner.
+        The object syntax is often used in conjunction with computed properties that return objects.
+    </div>
+    <div v-bind:style="[baseStyles, overridingStyles]">
+        The array syntax for v-bind:style allows you to apply multiple style objects to the same element:
+    </div>
+</div>
+
+<script>
+    new Vue({
+        el: '#vuestyle',
+        data: {
+            activeColor: 'red',
+            fontSize: 30,
+            styleObject: {
+                color: '#0000FF',
+                fontSize: 20
+            },
+            baseStyles: {color: '#00FF00', fontSize: '10px'},
+            overridingStyles: {fontFamily: 'calibri'}
+        }
+    })
+</script>

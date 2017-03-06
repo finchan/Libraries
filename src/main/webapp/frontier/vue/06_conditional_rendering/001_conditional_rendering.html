@@ -1,0 +1,87 @@
+<script src="../../../js/common/util.js"></script>
+<script src="../../../js/vue/vue.js"></script>
+
+<div id="conditional">
+    <div>In string templates - v-if</div>
+    <!--<div>-->
+        <!--{{#if ok}}-->
+        <!--<h1>Yes</h1>-->
+        <!--{{/if}}-->
+    <!--</div>-->
+    <h1 v-if="ok">Yes</h1>
+    <h1 v-else>No</h1>
+
+    <template v-if="ok">
+        <h1>Title</h1>
+        <p>Paragraph 1</p>
+        <p>Paragraph 2</p>
+    </template>
+
+    <div v-if="Math.random() > 0.5">
+        Sorry
+    </div>
+    <div v-else>
+        Not sorry
+    </div>
+
+    <div v-if="type === 'A'">
+        A
+    </div>
+    <div v-else-if="type === 'B'">
+        B
+    </div>
+    <div v-else-if="type === 'C'">
+        C
+    </div>
+    <div v-else>
+        Not A/B/C
+    </div>
+
+    <h1>Controlling Reusable Elements with key</h1>
+    <div>Vue tries to render elements as efficiently as possible,
+        often re-using them instead of rendering from scratch. Beyond helping make Vue very fast,
+        this can have some useful advantages.</div>
+    <template v-if="loginType=== 'username'">
+        <label>Username</label>
+        <input placeholder="Enter your name">
+    </template>
+    <template v-else>
+        <label>Email</label>
+        <input placeholder="Enter your email address">
+    </template>
+    <div>Then switching the loginType in the code above will not erase what the user has already entered. Since both templates use the same elements, the &lt;input&gt; is not replaced - just its placeholder.</div>
+
+
+    <div>Add a key attribute with unique values to make these two elements are completely separate. Note that the &lt;label&gt; elements are still efficiently re-used, because they don’t have key attributes.</div>
+    <template v-if="loginType === 'username'">
+        <label>Username</label>
+        <input placeholder="Enter your username" key="username-input">
+    </template>
+    <template v-else>
+        <label>Email</label>
+        <input placeholder="Enter your email address" key="email-input">
+    </template>
+
+    <h1>v-show</h1>
+    <div>The difference is that an element with v-show will always be rendered and remain in the DOM; v-show simply toggles the display CSS property of the element. Note that v-show doesn’t support the &lt;template&gt; syntax</div>
+    <h1 v-show="ok">Hello!</h1>
+
+    <div>
+        <pre>
+v-if is “real” conditional rendering because it ensures that event listeners and child components inside the conditional block are properly destroyed and re-created during toggles.
+v-if is also lazy: if the condition is false on initial render, it will not do anything - the conditional block won’t be rendered until the condition becomes true for the first time.
+In comparison, v-show is much simpler - the element is always rendered regardless of initial condition, with just simple CSS-based toggling.
+        </pre>
+    </div>
+
+</div>
+<script>
+    var vm =new Vue({
+        el: '#conditional',
+        data: {
+            ok: true,
+            type: 'B',
+            loginType: 'username'
+        }
+    });
+</script>

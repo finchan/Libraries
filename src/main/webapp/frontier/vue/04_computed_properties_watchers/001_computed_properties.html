@@ -1,0 +1,22 @@
+<script src="../../../js/common/util.js"></script>
+<script src="../../../js/vue/vue.js"></script>
+<div id="example">
+    <p>Original message: "{{ message }}"</p>
+    <p>Computed reversed message: "{{ reversedMessage }}"</p>
+</div>
+
+<script>
+    var vue = new Vue({
+       el: "#example",
+        data:{
+            message: "Hello"
+        },
+        //Here we have declared a computed property reversedMessage.
+        // The function we provided will be used as the getter function for the property vm.reversedMessage
+        computed: {
+            reversedMessage: function( ) {
+                return this.message.split('').reverse().join('');
+            }
+        }
+    });
+</script>

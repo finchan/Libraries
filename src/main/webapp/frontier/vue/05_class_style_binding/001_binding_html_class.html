@@ -1,0 +1,74 @@
+<script src="../../../js/common/util.js"></script>
+<script src="../../../js/vue/vue.js"></script>
+<style type="text/css">
+    .active {
+        font-weight: bold;
+    }
+    .static{
+        font-style: italic;
+    }
+    .text-danger{
+        color:#FF0000;
+    }
+</style>
+
+<div id="stylecss">
+    <h1>Object Syntax</h1>
+    <div v-bind:class="{active: isActive}">
+        Object Syntax - We can pass an object to v-bind:class to dynamically toggle classes
+    </div>
+    <br>
+    <div class="static" v-bind:class="{active: isActive, 'text-danger': hasError }">
+        You can have multiple classes toggled by having more fields in the object. In addition,
+        the v-bind:class directive can also co-exist with the plain class attribute. So given the following template:
+    </div>
+    <div v-bind:class="classObject">
+        The bound object doesn’t have to be inline.
+    </div>
+    <div v-bind:class="computedProperty">
+        We can also bind to a computed property that returns an object. This is a common and powerful pattern.
+    </div>
+
+    <h1>Array Syntax</h1>
+    <div v-bind:class="[activeClass, errorClass]">
+        We can pass an array to v-bind:class to apply a list of classes:
+    </div>
+    <div v-bind:class="[isActive ? activeClass : '', errorClass]">
+        If you would like to also toggle a class in the list conditionally, you can do it with a ternary expression.
+    </div>
+    <div v-bind:class="[{ active: isActive }, errorClass]">
+        However, this can be a bit verbose if you have multiple conditional classes. That’s why it’s also possible to use the object syntax inside array syntax:
+    </div>
+
+    <h1>With Components</h1>
+    <my-component class="baz boo"></my-component>
+    <my-component v-bind:class="{ active: isActive }"></my-component>
+</div>
+
+<script>
+    new Vue({
+        el: '#stylecss',
+        data: {
+            isActive: true,
+            hasError: true,
+            error: null,
+            activeClass: 'active',
+            errorClass: 'text-danger',
+            classObject: {
+                static: true,
+                'text-danger': true
+            }
+        },
+        computed: {
+            computedProperty: function() {
+                return {
+                    active: this.isActive && !this.error,
+                    'text-danger': this.error && this.error.type === 'fatal'
+                }
+            }
+        }
+    });
+    Vue.component('my-component', {
+        template: '<p class="foo bar">Hi</p>'
+    })
+</script>

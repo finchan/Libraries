@@ -1,0 +1,19 @@
+<script src="../../../js/vue/vue.js"></script>
+<div id="app-5">
+    <p>{{message}}</p>
+    <button v-on:click = "reverseMessage">Reverse Message!</button>
+</div>
+<script>
+    //To let users interact with your app, we can use the v-on directive to attach event listeners that invoke methods on our Vue instances
+    var app5 = new Vue({
+        el : "#app-5",
+        data: {
+            message: "Hello Vue.js!"
+        },
+        methods: {
+            reverseMessage: function( ) {
+                this.message = this.message.split('').reverse( ).join('')
+            }
+        }
+    });
+</script>

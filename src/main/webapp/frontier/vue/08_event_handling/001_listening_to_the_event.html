@@ -1,0 +1,77 @@
+<script src="../../../js/common/util.js"></script>
+<script src="../../../js/vue/vue.js"></script>
+<div>
+    <h1>Listening to Events</h1>
+    We can use the v-on directive to listen to DOM events and run some JavaScript when they’re triggered.
+</div>
+
+<div id="example-1">
+    <button v-on:click="counter+=1">Add 1</button>
+    <p>The button above has been clicked {{counter}} times</p>
+</div>
+
+<script>
+    var example1 = new Vue({
+       el: '#example-1',
+        data:{
+            counter: 0
+        }
+    });
+</script>
+
+<div>
+    <h1>Method Event Handlers</h1>
+    The logic for many event handlers will be more complex though, so keeping your JavaScript in the value of the v-on attribute simply isn’t feasible. That’s why v-on can also accept the name of a method you’d like to call.
+</div>
+<div id="example-2">
+    <button v-on:click="greet">Greet</button>
+</div>
+<script>
+    var example2 = new Vue({
+       el: '#example-2',
+        data: {
+            name: 'Vue.js'
+        },
+        methods: {
+            greet: function(event) {
+                alert('Hello ' + this.name + "!");
+                alert(event.target.tagName);
+            }
+        }
+    });
+</script>
+<div>
+    <h1>Methods in Inline Handlers</h1>
+</div>
+<div id="example-3">
+    <button @click="say('Hi')">Say Hi</button>
+    <button @click="say('What')">Say What</button>
+</div>
+<script>
+    var example3 = new Vue({
+       el: '#example-3',
+        methods: {
+            say: function(message) {
+                alert(message);
+            }
+        }
+    });
+</script>
+<div>
+    Sometimes we also need to access the original DOM event in an inline statement handler. You can pass it into a method using the special $event variable.
+    This "access" means you are going to change the value of event or invoke its behavior!!!!
+</div>
+<div id="example-4">
+    <a @click="warn('Form cannot be submitted yet.', $event)" href="http://www.bing.com">Submit</a>
+</div>
+<script>
+    var example4 = new Vue({
+        el: '#example-4',
+        methods: {
+            warn: function(message, event){
+                if(event) event.preventDefault();
+                alert(message);
+            }
+        }
+    });
+</script>
