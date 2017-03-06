@@ -23,7 +23,6 @@ import java.net.URI;
  */
 public class TIMyResourceTest {
     private final static Logger LOGGER = Logger.getLogger(TIMyResourceTest.class);
-    //TODO: there is bug here - 404 NOT Found Exception...
     public static final String BASE_URI = "http://localhost:8080/rest/jersey/bookjpa/*/";
     private HttpServer server;
     private WebTarget target;
