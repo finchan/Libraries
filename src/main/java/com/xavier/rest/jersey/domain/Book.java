@@ -19,6 +19,11 @@ public class Book implements Serializable{
     public Book() {
     }
 
+    public Book(String bookName, String publisher) {
+        this.bookName = bookName;
+        this.publisher = publisher;
+    }
+
     public Book(Long bookId) {
         this.bookId = bookId;
     }

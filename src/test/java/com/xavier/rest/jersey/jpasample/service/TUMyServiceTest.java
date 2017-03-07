@@ -24,7 +24,7 @@ public class TUMyServiceTest {
     @Test
     public void testGetAndSave() {
         final Book result = bookService.getBook(1L);
-        LOGGER.debug(result.getBookName());
+        LOGGER.info(result.getBookName());
         Assert.assertNotNull(result.getBookName());
     }
 }
