@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 
 @Path("books")
 public class BookResource {
-    private static final Logger LOGGER = Logger.getLogger(BookResource.class);
+    private static final Logger logger = Logger.getLogger(BookResource.class);
 
     @Autowired
     private BookService bookService;
@@ -24,7 +24,7 @@ public class BookResource {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Books getBooks ( ) {
         final Books books = bookService.getBooks();
-        LOGGER.debug(books);
+        logger.debug(books);
         return books;
     }
 
@@ -33,7 +33,7 @@ public class BookResource {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Book getBookByPath(@PathParam("bookId") final Long bookId) {
         final Book book = bookService.getBook(bookId);
-        LOGGER.debug(book);
+        logger.debug(book);
         return book;
     }
 
@@ -42,7 +42,7 @@ public class BookResource {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Book getBookByQuery(@QueryParam("id") final Long bookId) {
         final Book book = bookService.getBook(bookId);
-        LOGGER.debug(book);
+        logger.debug(book);
         return book;
     }
 

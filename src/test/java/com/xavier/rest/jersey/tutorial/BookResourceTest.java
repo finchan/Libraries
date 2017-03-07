@@ -1,8 +1,7 @@
 package com.xavier.rest.jersey.tutorial;
 
-import com.sun.org.apache.xml.internal.resolver.helpers.Debug;
 import com.xavier.rest.jersey.domain.Book;
-import com.xavier.utilities.DebugInfo;
+import com.xavier.utilities.DI;
 import org.apache.log4j.Logger;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.client.ClientConfig;
@@ -23,9 +22,9 @@ import java.net.URI;
 /**
  * Created by Xavier on 2017-02-28.
  */
-public class TIMyResourceTest {
-    private final static Logger logger = Logger.getLogger(TIMyResourceTest.class);
-    public static final String BASE_URI = "http://localhost:8080/rest/jersey/bookjpa/*/";
+public class BookResourceTest {
+    private final static Logger logger = Logger.getLogger(BookResourceTest.class);
+    public static final String BASE_URI = "http://localhost:8080/rest/jersey/bookjpa/";
     private HttpServer server;
     private WebTarget target;
 
@@ -48,11 +47,11 @@ public class TIMyResourceTest {
     }
 
     @Test
-    public void testStoreBook( ) {
+    public void testStoreBook() {
         final Book newBook = new Book("Java Restful Web Service实战-" + System.nanoTime(), "TBD");
         final Entity<Book> bookEntity = Entity.entity(newBook, MediaType.APPLICATION_JSON_TYPE);
         final Book savedBook = target.request(MediaType.APPLICATION_JSON_TYPE).post(bookEntity, Book.class);
         Assert.assertNotNull(savedBook.getBookId());
-        logger.info(DebugInfo.debugEmbrace(savedBook));
+        DI.info(logger, savedBook);
     }
 }
