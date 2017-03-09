@@ -1,12 +1,14 @@
 package com.xavier.rest.jersey.resource;
 
-import com.xavier.rest.jersey.domain.Book;
 import com.xavier.rest.jersey.domain.Books;
 import com.xavier.rest.jersey.service.BookService;
+import com.xavier.utilities.DI;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -16,61 +18,14 @@ import javax.ws.rs.core.MediaType;
 @Path("books")
 public class BookResource {
     private static final Logger logger = Logger.getLogger(BookResource.class);
-
     @Autowired
     private BookService bookService;
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Books getBooks ( ) {
-        final Books books = bookService.getBooks();
-        logger.debug(books);
+    public Books getBooks( ) {
+        final Books books = bookService.getBooks( );
+        DI.debug(logger, books);
         return books;
-    }
-
-    @Path("{bookId:[0-9]*}")
-    @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Book getBookByPath(@PathParam("bookId") final Long bookId) {
-        final Book book = bookService.getBook(bookId);
-        logger.debug(book);
-        return book;
-    }
-
-    @Path("/book")
-    @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Book getBookByQuery(@QueryParam("id") final Long bookId) {
-        final Book book = bookService.getBook(bookId);
-        logger.debug(book);
-        return book;
-    }
-
-    @POST
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_XML })
-    public Book saveBook(final Book book) {
-        return bookService.saveBook(book);
-    }
-
-    @Path("{bookId:[0-9]*}")
-    @PUT
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_XML })
-    public Book updateBook(@PathParam("bookId") final Long bookId, final Book book) {
-        if (book == null) {
-            return null;
-        }
-        return bookService.updateBook(bookId, book);
-    }
-
-    @Path("/{bookId:[0-9]*}")
-    @DELETE
-    public String deleteBook(@PathParam("bookId") final Long bookId) {
-        if (bookService.deleteBook(bookId)) {
-            return "Deleted book id=" + bookId;
-        } else {
-            return "Deleted book failed id=" + bookId;
-        }
     }
 }

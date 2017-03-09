@@ -1,6 +1,7 @@
 package com.xavier.rest.jersey.tutorial;
 
 import com.xavier.rest.jersey.domain.Book;
+import com.xavier.rest.jersey.domain.Books;
 import com.xavier.utilities.DI;
 import org.apache.log4j.Logger;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -12,10 +13,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import java.net.URI;
 
@@ -47,11 +45,11 @@ public class BookResourceTest {
     }
 
     @Test
-    public void testStoreBook() {
-        final Book newBook = new Book("Java Restful Web Service实战-" + System.nanoTime(), "TBD");
-        final Entity<Book> bookEntity = Entity.entity(newBook, MediaType.APPLICATION_JSON_TYPE);
-        final Book savedBook = target.request(MediaType.APPLICATION_JSON_TYPE).post(bookEntity, Book.class);
-        Assert.assertNotNull(savedBook.getBookId());
-        DI.info(logger, savedBook);
+    public void testGetAllBooks ( ) {
+        final Invocation.Builder invocationBuilder = target.request( );
+        final Books books = invocationBuilder.get(Books.class);
+        DI.info(logger, books.getBookList());
+        Assert.assertNotNull(books);
     }
+
 }

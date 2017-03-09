@@ -21,6 +21,14 @@ public class DI {
                         "\n<<<--------------<<<--------------<<<--------------<<<--------------<<<--------------<<<--------------<<<\n";
     }
 
+    public static final void debug(Logger logger, Object message) {
+        String formattedMessage =
+                "\n------------------------------------------------------------------------------------------------>>>\n" +
+                        message +
+                        "\n<<<------------------------------------------------------------------------------------------------\n";
+        logger.debug(formattedMessage);
+    }
+
     public static final void info(Logger logger, Object message) {
         String formattedMessage =
                 "\n------------------------------------------------------------------------------------------------>>>\n" +
