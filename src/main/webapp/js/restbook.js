@@ -1,4 +1,4 @@
-var bookRestUrl = 'webapi/books';
+var bookRestUrl = 'bookresource/books';
 function rest(restUrl, httpMethod, param, contenttype, datatype, callback) {
 	jQuery('#resultDiv').html("Loading...");
 	var request = jQuery.ajax({type : httpMethod, url : restUrl, data : param, contentType : contenttype, dataType : datatype});

@@ -1,6 +1,5 @@
 package com.xavier.rest.jersey.tutorial;
 
-import com.xavier.rest.jersey.domain.Book;
 import com.xavier.rest.jersey.domain.Books;
 import com.xavier.utilities.DI;
 import org.apache.log4j.Logger;
@@ -14,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.ws.rs.client.*;
-import javax.ws.rs.core.MediaType;
 import java.net.URI;
 
 /**
@@ -22,7 +20,7 @@ import java.net.URI;
  */
 public class BookResourceTest {
     private final static Logger logger = Logger.getLogger(BookResourceTest.class);
-    public static final String BASE_URI = "http://localhost:8080/rest/jersey/bookjpa/";
+    public static final String BASE_URI = "http://localhost:8080/rest/jersey/bookresource/";
     private HttpServer server;
     private WebTarget target;
 
