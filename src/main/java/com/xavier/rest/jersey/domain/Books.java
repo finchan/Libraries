@@ -13,6 +13,10 @@ import java.util.List;
 public class Books implements Serializable{
     private List<Book> bookList;
 
+    public Books(){
+
+    }
+
     @XmlElement(name="book")
     @XmlElementWrapper
     public List<Book> getBookList( ) {
