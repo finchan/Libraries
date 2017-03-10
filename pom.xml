@@ -13,6 +13,7 @@
         <log4j.version>1.2.16</log4j.version>
         <spring.version>3.2.3.RELEASE</spring.version>
         <eclipselink.version>2.5.0</eclipselink.version>
+        <jquery.version>2.0.3</jquery.version>
     </properties>
     <build>
         <finalName>libraries</finalName>
@@ -152,6 +153,14 @@
             <groupId>org.glassfish.jersey.test-framework.providers</groupId>
             <artifactId>jersey-test-framework-provider-simple</artifactId>
             <version>${jersey.version}</version>
+        </dependency>
+
+        <!--WebJar-->
+        <!--  web jars  -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>${jquery.version}</version>
         </dependency>
 
         <!--Others-->

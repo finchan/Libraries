@@ -116,6 +116,7 @@
     <orderEntry type="library" name="Maven: org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-simple:2.17" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.jersey.containers:jersey-container-simple-http:2.17" level="project" />
     <orderEntry type="library" name="Maven: org.simpleframework:simple:5.1.4" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars:jquery:2.0.3" level="project" />
     <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.8.0" level="project" />
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.5" level="project" />

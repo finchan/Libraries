@@ -93,6 +93,7 @@
           <element id="library" level="project" name="Maven: xerces:xercesImpl:2.8.0" />
           <element id="library" level="project" name="Maven: xalan:xalan:2.7.0" />
           <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.1.0" />
+          <element id="library" level="project" name="Maven: org.webjars:jquery:2.0.3" />
         </element>
       </element>
     </root>
