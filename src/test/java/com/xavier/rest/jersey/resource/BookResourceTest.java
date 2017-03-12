@@ -1,5 +1,6 @@
-package com.xavier.rest.jersey.tutorial;
+package com.xavier.rest.jersey.resource;
 
+import com.xavier.rest.jersey.domain.Book;
 import com.xavier.rest.jersey.domain.Books;
 import com.xavier.utilities.DI;
 import org.apache.log4j.Logger;
@@ -13,6 +14,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.ws.rs.client.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.net.URI;
 
 /**
@@ -48,6 +51,17 @@ public class BookResourceTest {
         final Books books = invocationBuilder.get(Books.class);
         DI.info(logger, books.getBookList());
         Assert.assertNotNull(books);
+    }
+
+    @Test
+    public void testQueryGetJSON ( ) {
+        final WebTarget queryTarget = target.path("/book").queryParam("id", 1L);
+        final Invocation.Builder invocationBuilder = queryTarget.request(MediaType.APPLICATION_XML_TYPE);
+        final Response response = invocationBuilder.get( );
+        final Book result = response.readEntity(Book.class);
+//        final Book result = invocationBuilder.get(Book.class);
+        DI.info(logger, result);
+        Assert.assertNotNull(result);
     }
 
 }

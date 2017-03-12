@@ -52,4 +52,25 @@ public class BookResource {
     public Book saveBook(final Book book) {
         return bookService.saveBook(book);
     }
+
+    @Path("{bookId:[0-9]*}")
+    @PUT
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Book updateBook(@PathParam("bookId") final Long bookId, final Book book) {
+        if (book == null) {
+            return null;
+        }
+        return bookService.updateBook(bookId, book);
+    }
+
+    @Path("/{bookId:[0-9]*}")
+    @DELETE
+    public String deleteBook (@PathParam("bookId") final Long bookId) {
+        if (bookService.deleteBook(bookId)) {
+            return "Deleted book id = " +bookId;
+        } else {
+            return "Deleted book failed id=" + bookId;
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package com.xavier.rest.jersey.tutorial;
+package com.xavier.rest.jersey.resource;
 
 import com.xavier.rest.jersey.domain.Device;
 import com.xavier.rest.jersey.server.Main;

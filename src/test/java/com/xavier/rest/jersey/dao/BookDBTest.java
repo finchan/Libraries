@@ -1,4 +1,4 @@
-package com.xavier.rest.jersey.jpasample.service;
+package com.xavier.rest.jersey.dao;
 
 import com.xavier.rest.jersey.domain.Book;
 import com.xavier.rest.jersey.domain.Books;
@@ -24,16 +24,23 @@ public class BookDBTest {
     private BookService bookService;
 
     @Test
-    public void testGetAndSave() {
+    public void testGe() {
         final Book result = bookService.getBook(1L);
         DI.info(logger, result.getBookName());
         Assert.assertNotNull(result.getBookName());
     }
 
     @Test
-    public void testGetAllBooks( ) {
+    public void testFindAll( ) {
         Books books = bookService.getBooks( );
         DI.info(logger, books);
         Assert.assertNotNull(books);
+    }
+
+    @Test
+    public void testSave( ) {
+        Book book = bookService.saveBook(new Book("CXF", "N/A"));
+        DI.info(logger, book);
+        Assert.assertNotNull(book.getBookId());
     }
 }
