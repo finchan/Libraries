@@ -64,4 +64,27 @@ public class BookResourceTest {
         Assert.assertNotNull(result);
     }
 
+    @Test
+    public void testPathGetJSON( ) {
+        final WebTarget pathTarget = target.path("/1");
+        final Invocation.Builder builder = pathTarget.request(MediaType.APPLICATION_JSON);
+        final Book result = builder.get(Book.class);
+        DI.info(logger,result);
+        Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void testPostAndDelete( ) {
+        final Book book = new Book("CXF", "N/A");
+        final Entity<Book> entity = Entity.entity(book, MediaType.APPLICATION_JSON_TYPE);
+        final Book savedBook = target.request(MediaType.APPLICATION_JSON).post(entity, Book.class);
+        DI.info(logger, savedBook);
+        Assert.assertNotNull(savedBook.getBookId());
+
+        final WebTarget deletedTarget = target.path("/" + savedBook.getBookId());
+        final Invocation.Builder builder = deletedTarget.request();
+        final String result = builder.delete(String.class);
+        DI.info(logger, result);
+        Assert.assertNotNull(result);
+    }
 }
