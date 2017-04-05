@@ -1,7 +1,9 @@
 package com.xavier.rest.jersey.resource.interf;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import com.xavier.rest.jersey.domain.Book;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 /**
  * Created by Xavier on 2017/3/27.
@@ -10,4 +12,9 @@ import javax.ws.rs.Path;
 public interface BookResourceInterface {
     @GET
     String getWeight( );
+
+    @PUT
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_XML)
+    String newBook(Book book);
 }
