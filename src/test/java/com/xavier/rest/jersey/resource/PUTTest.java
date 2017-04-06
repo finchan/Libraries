@@ -21,7 +21,7 @@ import javax.ws.rs.core.MediaType;
  */
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class PutTest extends JerseyTest {
+public class PUTTest extends JerseyTest {
     private static final Logger logger = Logger.getLogger(JerseyTestBookResourceTest.class);
 
     @Override
