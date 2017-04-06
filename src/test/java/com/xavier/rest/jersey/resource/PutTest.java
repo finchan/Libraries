@@ -1,8 +1,10 @@
 package com.xavier.rest.jersey.resource;
 
 import com.xavier.rest.jersey.domain.Book;
+import com.xavier.rest.jersey.resource.implementation.EBookResourceImpl;
 import com.xavier.utilities.DI;
 import org.apache.log4j.Logger;
+import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Assert;
 import org.junit.Test;
@@ -11,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -20,6 +23,11 @@ import javax.ws.rs.core.MediaType;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class PutTest extends JerseyTest {
     private static final Logger logger = Logger.getLogger(JerseyTestBookResourceTest.class);
+
+    @Override
+    protected Application configure() {
+        return new ResourceConfig(EBookResourceImpl.class);
+    }
 
     @Test
     public void testNew( ) {
