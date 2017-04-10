@@ -20,4 +20,13 @@ public class EBookResourceImpl implements BookResourceInterface {
         Book bk = bookService.saveBook(book);
         return bk.toString();
     }
+
+    public void delete(long bookId) {
+        bookService.deleteBook(bookId);
+    }
+
+    public Book createBook(Book book) {
+        Book bk = bookService.saveBook(book);
+        return bk;
+    }
 }
