@@ -19,7 +19,7 @@ public interface BookResourceInterface {
     String newBook(Book book);
 
     @DELETE
-    void delete(@QueryParam("bookId") final long bookId);
+    void delete(@QueryParam("bookId") long bookId);
 
     @POST
     @Produces(MediaType.APPLICATION_XML)

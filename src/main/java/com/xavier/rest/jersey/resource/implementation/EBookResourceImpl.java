@@ -16,16 +16,16 @@ public class EBookResourceImpl implements BookResourceInterface {
         return "150M";
     }
 
-    public String newBook(Book book) {
+    public String newBook(final Book book) {
         Book bk = bookService.saveBook(book);
         return bk.toString();
     }
 
-    public void delete(long bookId) {
+    public void delete(final long bookId) {
         bookService.deleteBook(bookId);
     }
 
-    public Book createBook(Book book) {
+    public Book createBook(final Book book) {
         Book bk = bookService.saveBook(book);
         return bk;
     }
