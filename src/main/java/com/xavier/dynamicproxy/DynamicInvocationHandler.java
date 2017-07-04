@@ -5,8 +5,6 @@ import org.apache.log4j.Logger;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-import java.util.Map;
 
 /**
  * Created by Xavier on 2017/6/28.
