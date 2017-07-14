@@ -1,9 +1,6 @@
 package com.xavier.cglib;
 
-import net.sf.cglib.proxy.Enhancer;
-import net.sf.cglib.proxy.FixedValue;
-import net.sf.cglib.proxy.MethodInterceptor;
-import net.sf.cglib.proxy.MethodProxy;
+import net.sf.cglib.proxy.*;
 
 import java.lang.reflect.Method;
 
@@ -41,9 +38,36 @@ public class EnhancerTest {
         System.out.println(proxy.toString());
     }
 
-    public static void main(String[] args) {
+    public void testCallBackFilter( ) throws Exception {
+        Enhancer enhancer = new Enhancer();
+        CallbackHelper callbackHelper = new CallbackHelper(SampleClass.class, new Class[0]) {
+            @Override
+            protected Object getCallback(Method method) {
+                if(method.getDeclaringClass() != Object.class && method.getReturnType() == String.class) {
+                    return new FixedValue() {
+                        public Object loadObject() throws Exception {
+                            return "Hello cglib!";
+                        }
+                    };
+                }else {
+                    return NoOp.INSTANCE;
+                }
+            }
+        };
+
+        enhancer.setSuperclass(SampleClass.class);
+        enhancer.setCallbackFilter(callbackHelper);
+        enhancer.setCallbacks(callbackHelper.getCallbacks());
+        SampleClass proxy = (SampleClass) enhancer.create();
+        System.out.println(proxy.test(null));
+        System.out.println(proxy.toString());
+        proxy.hashCode();
+    }
+
+    public static void main(String[] args) throws Exception{
         EnhancerTest test = new EnhancerTest();
         test.testFixedValue();
         test.testInvocationHandler();
+        test.testCallBackFilter();
     }
 }
