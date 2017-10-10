@@ -23,8 +23,16 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>LabAjaxFormDataSubmit</servlet-name>
+        <servlet-class>com.xavier.lab.LabAjaxFormDataSubmit</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>JerseyWebApplication</servlet-name>
         <url-pattern>/rest/jersey/webapi/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LabAjaxFormDataSubmit</servlet-name>
+        <url-pattern>/lab/ajax/formdataservlet/*</url-pattern>
     </servlet-mapping>
 </web-app>
