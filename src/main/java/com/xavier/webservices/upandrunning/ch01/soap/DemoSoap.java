@@ -10,6 +10,9 @@ import java.util.Date;
 
 /**
  * Created by Xavier on 2017/11/30.
+ * <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body/></SOAP-ENV:Envelope>
+ * <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header><ms:TimeRequest xmlns:ms="http://ch01/mysoap">time_request</ms:TimeRequest></SOAP-ENV:Header><SOAP-ENV:Body/></SOAP-ENV:Envelope>
+ * <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header><ms:TimeRequest xmlns:ms="http://ch01/mysoap">time_request</ms:TimeRequest></SOAP-ENV:Header><SOAP-ENV:Body><ms:TimeRequest xmlns:ms="http://ch01/mysoap">Mon Dec 04 10:09:24 CST 2017</ms:TimeRequest></SOAP-ENV:Body></SOAP-ENV:Envelope>
  */
 public class DemoSoap {
     private static final String LocalName = "TimeRequest";
