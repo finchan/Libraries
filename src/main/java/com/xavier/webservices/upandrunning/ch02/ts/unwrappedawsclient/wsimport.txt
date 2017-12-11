@@ -1,0 +1,1 @@
+wsimport -keep -p com.xavier.webservices.upandrunning.ch02.ts.unwrappedawsclient http://ecs.amazonaws.com/AWSECommerceService/AWSECommerceService.wsdl -b custom.xml

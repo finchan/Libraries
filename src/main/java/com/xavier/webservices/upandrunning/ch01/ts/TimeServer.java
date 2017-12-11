@@ -9,7 +9,7 @@ import javax.jws.soap.SOAPBinding.Style;
  * Created by Xavier on 2017/11/30.
  */
 @WebService
-@SOAPBinding(style = Style.RPC)
+//@SOAPBinding(style = Style.RPC)
 public interface TimeServer { //SEI
     @WebMethod
     String getTimeAsString( );

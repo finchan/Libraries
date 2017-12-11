@@ -15,6 +15,7 @@ public class AmazonClientW {
             return;
         }
         final String access_key = args[0];
+        final String signature = args[1];
 
         AWSECommerceService service = new AWSECommerceService();
         AWSECommerceServicePortType port = service.getAWSECommerceServicePort();
@@ -26,6 +27,7 @@ public class AmazonClientW {
         ItemSearch search = new ItemSearch();
         search.getRequest().add(request);
         search.setAWSAccessKeyId(access_key);
+
 
         Holder<OperationRequest> operation_request = null;
         Holder<List<Items>> items = new Holder<List<Items>>();

@@ -10,8 +10,8 @@ import java.net.URL;
  */
 public class TimeClient {
     public static void main(String[] args) throws MalformedURLException {
-        URL url = new URL("http://127.0.0.1:8080/ts?wsdl"); //tcpmon monitor
-        //URL url = new URL("http://localhost:9876/ts?wsdl");
+//        URL url = new URL("http://127.0.0.1:8080/ts?wsdl"); //tcpmon monitor
+        URL url = new URL("http://localhost:9876/ts?wsdl");
         QName qName = new QName("http://ts.ch01.upandrunning.webservices.xavier.com/", "TimeServerImplService");
         Service service = Service.create(url, qName);
         TimeServer eif = service.getPort(TimeServer.class);
