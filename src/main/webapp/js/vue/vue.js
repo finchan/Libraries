@@ -4417,7 +4417,7 @@ function createPatchFunction (backend) {
 
   var bailed = false;
   // list of modules that can skip create hook during hydration because they
-  // are already rendered on the client or has no need for initialization
+  // are already rendered on the rpcclient or has no need for initialization
   var isRenderedModule = makeMap('attrs,style,class,staticClass,staticStyle,key');
 
   // Note: this is a browser-only function so we can assume elms are DOM nodes.
@@ -4441,7 +4441,7 @@ function createPatchFunction (backend) {
     }
     if (isDef(tag)) {
       if (isDef(children)) {
-        // empty element, allow client to pick up and populate children
+        // empty element, allow rpcclient to pick up and populate children
         if (!elm.hasChildNodes()) {
           createChildren(vnode, children, insertedVnodeQueue);
         } else {
@@ -4525,11 +4525,11 @@ function createPatchFunction (backend) {
               return oldVnode
             } else {
               warn(
-                'The client-side rendered virtual DOM tree is not matching ' +
+                'The rpcclient-side rendered virtual DOM tree is not matching ' +
                 'server-rendered content. This is likely caused by incorrect ' +
                 'HTML markup, for example nesting block-level elements inside ' +
                 '<p>, or missing <tbody>. Bailing hydration and performing ' +
-                'full client-side render.'
+                'full rpcclient-side render.'
               );
             }
           }

@@ -1370,7 +1370,7 @@
     return _.isFunction(value) ? value.call(object) : value;
   };
 
-  // Generate a unique integer id (unique within the entire client session).
+  // Generate a unique integer id (unique within the entire rpcclient session).
   // Useful for temporary DOM ids.
   var idCounter = 0;
   _.uniqueId = function(prefix) {
