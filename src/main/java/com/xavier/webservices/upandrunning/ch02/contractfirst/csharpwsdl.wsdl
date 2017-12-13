@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempConvertURI.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempConvertURI.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+	<wsdl:types>
+		<s:schema elementFormDefault="qualified" targetNamespace="http://tempConvertURI.org/">
+			<s:element name="c2f">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="t" type="s:double"/>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="c2fResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="c2fResult" type="s:double"/>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="f2c">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="t" type="s:double"/>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="f2cResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="f2cResult" type="s:double"/>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+		</s:schema>
+	</wsdl:types>
+	<wsdl:message name="c2fSoapIn">
+		<wsdl:part name="parameters" element="tns:c2f"/>
+	</wsdl:message>
+	<wsdl:message name="c2fSoapOut">
+		<wsdl:part name="parameters" element="tns:c2fResponse"/>
+	</wsdl:message>
+	<wsdl:message name="f2cSoapIn">
+		<wsdl:part name="parameters" element="tns:f2c"/>
+	</wsdl:message>
+	<wsdl:message name="f2cSoapOut">
+		<wsdl:part name="parameters" element="tns:f2cResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="ServiceSoap">
+		<wsdl:operation name="c2f">
+			<wsdl:input message="tns:c2fSoapIn"/>
+			<wsdl:output message="tns:c2fSoapOut"/>
+		</wsdl:operation>
+		<wsdl:operation name="f2c">
+			<wsdl:input message="tns:f2cSoapIn"/>
+			<wsdl:output message="tns:f2cSoapOut"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="c2f">
+			<soap:operation soapAction="http://tempConvertURI.org/c2f" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="f2c">
+			<soap:operation soapAction="http://tempConvertURI.org/f2c" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
+		<soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="c2f">
+			<soap12:operation soapAction="http://tempConvertURI.org/c2f" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="f2c">
+			<soap12:operation soapAction="http://tempConvertURI.org/f2c" style="document"/>
+			<wsdl:input>
+				<soap12:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="Service">
+		<wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
+			<soap:address location="http://localhost:1443/TempConvert/Service.asmx"/>
+		</wsdl:port>
+		<wsdl:port name="ServiceSoap12" binding="tns:ServiceSoap12">
+			<soap12:address location="http://localhost:1443/TempConvert/Service.asmx"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
