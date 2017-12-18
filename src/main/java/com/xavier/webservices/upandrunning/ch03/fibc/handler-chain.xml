@@ -3,12 +3,32 @@
 Outbound Handler Sequence - Logical Handler > Soap Handler
 Inbound Handler Sequence - SOAP Handler > Logical Handler
 -->
+
+<!--
+1. The  getHeaders method in the  TestHandler  and then in the  UUIDHandler , both of which are SOAP handlers, execute first.
+2. The  handleMessage in the logical handler  ArgHandler executes first among the methods with this name.
+3. The  handleMessage in the SOAP handler  TestHandler executes next, as this handler is listed first in the configuration file.
+4. The  handleMessage in the SOAP handler  UUIDHandler executes next.
+5. The  close method in the SOAP handler  UUIDHandler executes to signal that  UUID Handler processing is now done.
+6. The  close method in the SOAP handler  TestHandler executes to signal that the TestHandler processing is now done.
+7. The  close method in the logical handler  ArgHandler executes, which completes the chain on the outgoing message.
+-->
 <javaee:handler-chains
         xmlns:javaee="http://java.sun.com/xml/ns/javaee"
         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <javaee:handler-chain>
         <javaee:handler>
+            <javaee:handler-class>com.xavier.webservices.upandrunning.ch03.fibc.TestHandler</javaee:handler-class>
+        </javaee:handler>
+    </javaee:handler-chain>
+    <javaee:handler-chain>
+        <javaee:handler>
             <javaee:handler-class>com.xavier.webservices.upandrunning.ch03.fibc.UUIDHandler</javaee:handler-class>
+        </javaee:handler>
+    </javaee:handler-chain>
+    <javaee:handler-chain>
+        <javaee:handler>
+            <javaee:handler-class>com.xavier.webservices.upandrunning.ch03.fibc.ArgHandler</javaee:handler-class>
         </javaee:handler>
     </javaee:handler-chain>
 </javaee:handler-chains>

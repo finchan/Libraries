@@ -1,5 +1,6 @@
 package com.xavier.webservices.upandrunning.ch03.fib;
 
+import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -15,6 +16,7 @@ import java.util.Map;
 @SOAPBinding (style = SOAPBinding.Style.DOCUMENT,
                             use = SOAPBinding.Use.LITERAL,
                             parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
+@HandlerChain(file="handler-chain-server.xml")
 public class RabbitCounter {
     private Map<Integer, Integer> cache = Collections.synchronizedMap(new HashMap<Integer, Integer>());
     @WebMethod

@@ -14,8 +14,11 @@ import java.util.Set;
 public class TestHandler implements SOAPHandler<SOAPMessageContext> {
     public boolean handleMessage(SOAPMessageContext context) {
         try {
-            SOAPMessage msg = context.getMessage();
-            msg.writeTo(System.out);
+            Boolean request = (Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+            if(request) {
+                SOAPMessage msg = context.getMessage();
+                msg.writeTo(System.out);
+            }
         } catch (SOAPException e) {
             e.printStackTrace();
         } catch (IOException e) {
