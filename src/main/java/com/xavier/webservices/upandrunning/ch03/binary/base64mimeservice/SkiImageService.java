@@ -1,4 +1,4 @@
-package com.xavier.webservices.upandrunning.ch03.binary.base64service;
+package com.xavier.webservices.upandrunning.ch03.binary.base64mimeservice;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -24,11 +24,6 @@ public class SkiImageService {
         return createImage(name);
     }
 
-    @WebMethod
-    public List<Image> getImages ( ){
-        return createImageList();
-    }
-
     private Image createImage(String name) {
         byte[] bytes = getRawBytes(name);
         ByteArrayInputStream in = new ByteArrayInputStream(bytes);
@@ -51,6 +46,10 @@ public class SkiImageService {
             String sep = System.getProperty("file.separator");
             String base_name = cwd+sep+"jpegs" +sep;
             String file_name = base_name + name + ".jpg";
+            System.out.println("user.dir " + cwd);
+            System.out.println("file.separator " + sep);
+            System.out.println("base_name " + base_name);
+            System.out.println("filename " + file_name);
             FileInputStream in = new FileInputStream(file_name);
 
             if(in== null) in = new FileInputStream(base_name + "nordic.jpg");
@@ -65,6 +64,11 @@ public class SkiImageService {
             e.printStackTrace();
         }
         return out.toByteArray();
+    }
+
+    @WebMethod
+    public List<Image> getImages (){
+        return createImageList();
     }
 
     private List<Image> createImageList() {

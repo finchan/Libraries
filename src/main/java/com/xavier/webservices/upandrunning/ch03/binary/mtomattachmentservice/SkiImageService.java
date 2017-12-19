@@ -1,10 +1,12 @@
-package com.xavier.webservices.upandrunning.ch03.binary.base64service;
+package com.xavier.webservices.upandrunning.ch03.binary.mtomattachmentservice;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import javax.xml.ws.BindingType;
+import javax.xml.ws.soap.SOAPBinding;
 import java.awt.*;
 import java.io.*;
 import java.util.*;
@@ -14,6 +16,7 @@ import java.util.List;
  * Created by Xavier on 2017/12/19.
  */
 @WebService(serviceName = "SkiImageService")
+@BindingType(value= SOAPBinding.SOAP11HTTP_MTOM_BINDING)
 public class SkiImageService {
     private static final String[] names = {"nordic.jpg", "telemk.jpg", "alphine.jpg"};
     private Map<String, String> photos;
