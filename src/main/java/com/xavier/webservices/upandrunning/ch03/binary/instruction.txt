@@ -1,0 +1,22 @@
+There are two general approaches to handling arbitrary binary data in SOAP-based web services:
+    • The binary data can be encoded using a scheme such as base64 and then transmitted as the payload of the SOAP body.
+    For instance, a service operation that returns an image to a requester simply could return a  java.awt.Image , which is a
+    Java wrapper for image bytes. The image’s bytes then would be encoded and transmitted as the body of a SOAP message.
+    The downside is that base64 and similar encoding schemes result in payloads that are at least a third larger in size than the
+    original, unencoded binary data. In short, byte encoding such as base64 results in data bloat.
+    • The binary data can be transmitted as one or more attachments to a SOAP message. Recall that a SOAP message consists of a SOAP part,
+    which is the SOAP envelope with an optional header and a possibly empty body. A SOAP message also may have attachments,
+    which can carry data of any MIME type, including multimedia types such as  audio/x-wav ,  video/mpeg , and  image/jpeg .
+    JAX-B provides the required mappings between MIME and Java types: the MIME types  image/* map to Image ,
+    and the remaining multimedia types map to  DataHandler .
+
+Three Options for SOAP Attachments
+There are basically three options for SOAP attachments: SwA (SOAP with Attachments), the original SOAP specification for attachments;
+DIME (Direct Internet Message Encapsulation), a lightweight but by now old-fashioned encoding scheme for attachments;
+and MTOM (Message Transmission Optimization Mechanism), which is based on XOP (XML-Binary Optimized Packaging).
+JWS has a DIME extension whose main purpose is to interoperate with Microsoft clients. Up until the release of Microsoft
+Office 2003, a web service client written in Visual Basic for Applications (VBA) could handle only DIME rather than MTOM attachments.
+The SwA approach has drawbacks. For one, it is hard to use SwA with a  document- style service, which is now the norm.
+Further, frameworks such as DotNet do not support SwA. MTOM has the W3C stamp of approval and enjoys widespread support;
+hence, MTOM is the efficient, modern, interoperable way to transmit binary data in SOAP-based web services. Before considering MTOM,
+let’s take a quick look at base64 encoding of binary data, which might be used for small binary payloads.
