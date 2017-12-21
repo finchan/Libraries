@@ -3,11 +3,11 @@ package com.xavier.webservices.upandrunning.ch04.team;
 import com.xavier.webservices.upandrunning.ch01.team.Team;
 
 import javax.annotation.Resource;
-import javax.management.RuntimeErrorException;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.*;
 import javax.xml.ws.handler.MessageContext;
+import javax.xml.ws.http.HTTPBinding;
 import javax.xml.ws.http.HTTPException;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -22,6 +22,8 @@ import java.util.Map;
  */
 @WebServiceProvider
 @ServiceMode(value = Service.Mode.MESSAGE)
+//Indicate that the service deals with raw XML over HTTP instead of SOAP over HTTP
+@BindingType(value = HTTPBinding.HTTP_BINDING)
 public class RestfulTeams implements Provider<Source> {
 
     @Resource
@@ -61,7 +63,7 @@ public class RestfulTeams implements Provider<Source> {
     private String get_file_path() {
         String cwd = System.getProperty("user.dir");
         String sep = System.getProperty("file.separator");
-        return cwd+sep+"ch04" + sep + "team" + sep + file_name;
+        return cwd+sep+"rc"+sep+"ch04" + sep + "team" + sep + file_name;
     }
 
     public Source invoke(Source request) {
@@ -101,6 +103,4 @@ public class RestfulTeams implements Provider<Source> {
             throw new HTTPException(400); //Bad Request
         return parts[1].trim();
     }
-
-
 }
