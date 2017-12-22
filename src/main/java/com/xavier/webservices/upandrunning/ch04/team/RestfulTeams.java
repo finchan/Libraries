@@ -73,6 +73,9 @@ public class RestfulTeams implements Provider<Source> {
         String http_verb = (String) msg_ctx.get(MessageContext.HTTP_REQUEST_METHOD);
         http_verb = http_verb.trim().toUpperCase();
         if(http_verb.equals("GET")) return doGet(msg_ctx);
+//        else if (http_verb.equals("POST")) return doPost(msg_ctx);
+//        else if (http_verb.equals("PUT")) return doPut(msg_ctx);
+//        else if (http_verb.equals("DELETE")) return doDelete(msg_ctx);
         else throw new HTTPException(405); //Method not allowed
     }
 
@@ -82,11 +85,11 @@ public class RestfulTeams implements Provider<Source> {
             return new StreamSource(new ByteArrayInputStream((team_bytes)));
         } else {
             String name = get_value_from_qs("name", query_string);
+            Team team = team_map.get(name);
+            if(team == null) throw new HTTPException(404);
+            ByteArrayInputStream stream = encode_to_stream(team);
+            return new StreamSource(stream);
         }
-        Team team = team_map.get("name");
-        if(team == null) throw new HTTPException(404);
-        ByteArrayInputStream stream = encode_to_stream(team);
-        return new StreamSource(stream);
     }
 
     private ByteArrayInputStream encode_to_stream(Object obj) {
