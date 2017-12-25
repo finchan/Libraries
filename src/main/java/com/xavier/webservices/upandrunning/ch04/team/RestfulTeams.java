@@ -1,21 +1,27 @@
 package com.xavier.webservices.upandrunning.ch04.team;
 
+import com.xavier.webservices.upandrunning.ch01.team.Player;
 import com.xavier.webservices.upandrunning.ch01.team.Team;
+import org.w3c.dom.NodeList;
 
 import javax.annotation.Resource;
-import javax.xml.transform.Source;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.*;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.http.HTTPBinding;
 import javax.xml.ws.http.HTTPException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.*;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.*;
 
 /**
  * Created by Xavier on 2017/12/20.
@@ -33,6 +39,7 @@ public class RestfulTeams implements Provider<Source> {
     private List<Team> teams;
     private byte[] team_bytes;
     private static final String file_name="team_ser";
+    private static final String put_post_key = "Cargo";
 
     public RestfulTeams() {
         read_teams_from_file();
@@ -73,10 +80,73 @@ public class RestfulTeams implements Provider<Source> {
         String http_verb = (String) msg_ctx.get(MessageContext.HTTP_REQUEST_METHOD);
         http_verb = http_verb.trim().toUpperCase();
         if(http_verb.equals("GET")) return doGet(msg_ctx);
-//        else if (http_verb.equals("POST")) return doPost(msg_ctx);
+        else if (http_verb.equals("POST")) return doPost(msg_ctx);
 //        else if (http_verb.equals("PUT")) return doPut(msg_ctx);
 //        else if (http_verb.equals("DELETE")) return doDelete(msg_ctx);
         else throw new HTTPException(405); //Method not allowed
+    }
+
+    private Source doPost(MessageContext msg_ctx) {
+        Map<String, List> request = (Map<String, List>) msg_ctx.get(MessageContext
+        .HTTP_REQUEST_HEADERS);
+        List<String> cargo = request.get(put_post_key);
+        if(cargo == null) throw new HTTPException(400); //Bad request - Requested malformed.
+        String xml = "";
+        for(String next: cargo) xml += next.trim();
+        ByteArrayInputStream xml_stream = new ByteArrayInputStream(xml.getBytes());
+        String team_name = null;
+        try{
+            DOMResult dom = new DOMResult();
+            Transformer trans = TransformerFactory.newInstance().newTransformer();
+            trans.transform(new StreamSource(xml_stream), dom);
+            URI ns_URI = new URI("create_team");
+
+            XPathFactory xpf = XPathFactory.newInstance();
+            XPath xp = xpf.newXPath();
+            xp.setNamespaceContext(new NSResolver("", ns_URI.toString()));
+            team_name = xp.evaluate("/create_team/name", dom.getNode());
+            List<Player> team_players = new ArrayList<Player>();
+            NodeList players = (NodeList) xp.evaluate("player", dom.getNode(), XPathConstants.NODESET);
+            
+            for(int i = 1; i <= players.getLength(); i++) {
+                String name = xp.evaluate("name", dom.getNode());
+                String nickname = xp.evaluate("nickname", dom.getNode());
+                Player player = new Player(name, nickname);
+                team_players.add(player);
+            }
+            
+            Team t = new Team(team_name, team_players);
+            team_map.put(team_name, t) ;
+            serialize();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+        return response_to_client("Team " + team_name + " created.");
+    }
+
+    private Source response_to_client(String msg) {
+        HttpResponse response = new HttpResponse();
+        response.setResponse(msg);
+        ByteArrayInputStream stream = encode_to_stream(response);
+        return new StreamSource(stream);
+    }
+
+    private void serialize() {
+        try {
+            String path = get_file_path();
+            BufferedOutputStream out = new BufferedOutputStream((new FileOutputStream(path)));
+            XMLEncoder enc = new XMLEncoder(out);
+            enc.writeObject(teams);
+            enc.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private Source doGet(MessageContext msg_ctx) {
