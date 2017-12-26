@@ -2,6 +2,7 @@ package com.xavier.webservices.upandrunning.ch04.team;
 
 import com.xavier.webservices.upandrunning.ch01.team.Player;
 import com.xavier.webservices.upandrunning.ch01.team.Team;
+import org.apache.tools.ant.taskdefs.email.Message;
 import org.w3c.dom.NodeList;
 
 import javax.annotation.Resource;
@@ -38,7 +39,7 @@ public class RestfulTeams implements Provider<Source> {
     private Map<String, Team> team_map;
     private List<Team> teams;
     private byte[] team_bytes;
-    private static final String file_name="team_ser";
+    private static final String file_name="teams.ser";
     private static final String put_post_key = "Cargo";
 
     public RestfulTeams() {
@@ -81,9 +82,45 @@ public class RestfulTeams implements Provider<Source> {
         http_verb = http_verb.trim().toUpperCase();
         if(http_verb.equals("GET")) return doGet(msg_ctx);
         else if (http_verb.equals("POST")) return doPost(msg_ctx);
-//        else if (http_verb.equals("PUT")) return doPut(msg_ctx);
-//        else if (http_verb.equals("DELETE")) return doDelete(msg_ctx);
+        else if (http_verb.equals("DELETE")) return doDelete(msg_ctx);
+        else if (http_verb.equals("PUT")) return doPut(msg_ctx);
         else throw new HTTPException(405); //Method not allowed
+    }
+
+    private Source doPut(MessageContext msg_ctx) {
+        String query_string = (String) msg_ctx.get(MessageContext.QUERY_STRING);
+        String name = null;
+        String new_name = null;
+
+        if (query_string == null) throw new HTTPException(403);
+        else {
+            String[] parts = query_string.split("&");
+            if (parts[0] == null || parts[1] == null) throw new HTTPException(403);
+            name = get_value_from_qs("name", parts[0]);
+            new_name = get_value_from_qs("new_name", parts[1]);
+            if(name == null || new_name == null) throw new HTTPException(403);
+
+            Team team = team_map.get("name");
+            if(team == null) throw new HTTPException(404);
+            team.setName(new_name);
+            team_map.put(new_name, team);
+            serialize();
+        }
+        return response_to_client("Team " + name + " changed to " + new_name);
+    }
+
+    private Source doDelete(MessageContext msg_ctx) {
+        String query_string =(String) msg_ctx.get(MessageContext.QUERY_STRING);
+        if(query_string == null) throw new HTTPException(403);  //Forbidden - Request refused
+        else {
+            String name = get_value_from_qs("name", query_string);
+            if (!team_map.containsKey(name)) throw new HTTPException(404);  //Resource not found
+            Team team = team_map.get(name);
+            teams.remove(team);
+            team_map.remove(name);
+            serialize();
+            return response_to_client(name + " deleted.");
+        }
     }
 
     private Source doPost(MessageContext msg_ctx) {
@@ -105,6 +142,10 @@ public class RestfulTeams implements Provider<Source> {
             XPath xp = xpf.newXPath();
             xp.setNamespaceContext(new NSResolver("", ns_URI.toString()));
             team_name = xp.evaluate("/create_team/name", dom.getNode());
+
+            if(team_map.containsKey(team_name))
+                throw new HTTPException(400);   //Bad request - Request malformed
+
             List<Player> team_players = new ArrayList<Player>();
             NodeList players = (NodeList) xp.evaluate("player", dom.getNode(), XPathConstants.NODESET);
             
@@ -117,6 +158,7 @@ public class RestfulTeams implements Provider<Source> {
             
             Team t = new Team(team_name, team_players);
             team_map.put(team_name, t) ;
+            teams.add(t);
             serialize();
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
