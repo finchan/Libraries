@@ -2,9 +2,7 @@ package com.xavier.webservices.upandrunning.ch04.team;
 
 import com.xavier.webservices.upandrunning.ch01.team.Player;
 import com.xavier.webservices.upandrunning.ch01.team.Team;
-import org.apache.tools.ant.taskdefs.email.Message;
 import org.w3c.dom.NodeList;
-
 import javax.annotation.Resource;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMResult;
@@ -109,6 +107,7 @@ public class RestfulTeams implements Provider<Source> {
         return response_to_client("Team " + name + " changed to " + new_name);
     }
 
+    //http://localhost:8888/teams?name=SmothersBrothers2
     private Source doDelete(MessageContext msg_ctx) {
         String query_string =(String) msg_ctx.get(MessageContext.QUERY_STRING);
         if(query_string == null) throw new HTTPException(403);  //Forbidden - Request refused
@@ -123,6 +122,7 @@ public class RestfulTeams implements Provider<Source> {
         }
     }
 
+    //Headers - Cargo - <create_team><name>SmothersBrothers2</name><players><player><name>Thomas</name><nickname>Tom</nickname></player><player><name>Richard</name><nickname>Dickie</nickname></player></players></create_team>
     private Source doPost(MessageContext msg_ctx) {
         Map<String, List> request = (Map<String, List>) msg_ctx.get(MessageContext
         .HTTP_REQUEST_HEADERS);
