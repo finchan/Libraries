@@ -32,7 +32,7 @@ public class TeamClient {
             conn.connect();
             print_and_parse(conn, true);
 
-            conn = get_connection(endpoint + "?name=Marx%20Brothers", "GET");
+            conn = get_connection(endpoint + "?name=BurnsAndAllen", "GET");
             conn.connect();
             print_and_parse(conn, true);
         } catch (IOException e) {
