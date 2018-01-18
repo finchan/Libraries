@@ -1,6 +1,7 @@
 package com.xavier.webservices.upandrunning.ch04.team;
 
 import javax.xml.namespace.NamespaceContext;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -14,10 +15,10 @@ public class NSResolver implements NamespaceContext {
 
     public NSResolver() {
         if(prefix_to_uri == null ) {
-            prefix_to_uri = new HashMap<String, String>();
+            prefix_to_uri = Collections.synchronizedMap(new HashMap<String, String>());
         }
         if(uri_to_prefix == null) {
-            uri_to_prefix = new HashMap<String, String> ();
+            uri_to_prefix = Collections.synchronizedMap(new HashMap<String, String>());
         }
     }
 
