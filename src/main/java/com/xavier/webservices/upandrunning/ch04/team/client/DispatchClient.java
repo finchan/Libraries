@@ -38,7 +38,7 @@ public class DispatchClient {
 
         QName service_name = new QName("rcService", ns_URI.toString());
         QName port = new QName("rcPort", ns_URI.toString());
-        String endpoint = "http://localhost:9876/rabbitcounter";
+        String endpoint = "http://localhost:8888/rabbitcounter";
 
         Service service = Service.create(service_name);
         service.addPort(port, HTTPBinding.HTTP_BINDING, endpoint);

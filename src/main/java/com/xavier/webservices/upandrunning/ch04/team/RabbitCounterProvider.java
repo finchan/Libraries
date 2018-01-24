@@ -21,7 +21,7 @@ import java.util.*;
  */
 @WebServiceProvider
 @BindingType(value = HTTPBinding.HTTP_BINDING)
-public class RabibitCounterProvider implements Provider<Source> {
+public class RabbitCounterProvider implements Provider<Source> {
 
     @Resource
     protected WebServiceContext wsc;
