@@ -27,6 +27,15 @@
         <servlet-name>LabAjaxFormDataSubmit</servlet-name>
         <servlet-class>com.xavier.lab.LabAjaxFormDataSubmit</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RabbitCounterServlet</servlet-name>
+        <servlet-class>com.xavier.webservices.upandrunning.ch04.team.RabbitCounterServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RabbitCounterServlet</servlet-name>
+        <url-pattern>/fib</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>JerseyWebApplication</servlet-name>
         <url-pattern>/rest/jersey/webapi/*</url-pattern>
