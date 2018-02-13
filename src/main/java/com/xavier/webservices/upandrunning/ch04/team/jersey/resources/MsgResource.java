@@ -1,4 +1,4 @@
-package com.xavier.webservices.upandrunning.ch04.team.jersey;
+package com.xavier.webservices.upandrunning.ch04.team.jersey.resources;
 
 import javax.ws.rs.*;
 import java.beans.XMLEncoder;
@@ -8,7 +8,7 @@ import java.io.ByteArrayOutputStream;
  * Created by Xavier on 2018/2/12.
  */
 
-@Path("/upandrunning/")
+@Path("/")
 public class MsgResource {
     private static String msg = "Hello, world!";
 
