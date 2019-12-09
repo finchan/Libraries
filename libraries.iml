@@ -36,7 +36,7 @@
       <configuration ws.engine="Glassfish / JAX-WS 2.2 RI / Metro 1.X / JWSDP 2.2" />
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -147,7 +147,7 @@
     <orderEntry type="module-library">
       <library name="Maven: jdk.tools:jdk.tools:1.8">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/jdk/tools/jdk.tools/1.8/jdk.tools-1.8.jar!/" />
+          <root url="jar://C:/Program Files/Java/jdk1.7.0_80/lib/tools.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -217,5 +217,8 @@
     <orderEntry type="library" name="Maven: org.apache.hadoop:hadoop-yarn-common:2.7.7" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-client:1.9" level="project" />
     <orderEntry type="library" name="Maven: org.apache.hadoop:hadoop-mapreduce-client-jobclient:2.7.7" level="project" />
+    <orderEntry type="library" name="Maven: com.github.spotbugs:spotbugs-annotations:3.1.9" level="project" />
+    <orderEntry type="library" name="Maven: jline:jline:0.9.94" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.yetus:audience-annotations:0.5.0" level="project" />
   </component>
 </module>
