@@ -5,8 +5,6 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.security.UserGroupInformation;
-import java.security.PrivilegedExceptionAction;
 /*
     If you are using Windows to run a Java file to manipulate HDFS,
     you have to set hadoop.home.dir to hadoop-common-2.2.0-bin-master.
@@ -17,22 +15,16 @@ public class OperatingFiles {
     static Configuration conf;
     static FileSystem hdfs;
     static {
-        UserGroupInformation ugi = UserGroupInformation
-                .createRemoteUser("hadoop");
-        try{
-            ugi.doAs(new PrivilegedExceptionAction<Void>() {
-                public Void run() throws Exception {
-                    System.setProperty("hadoop.home.dir", "D:\\Development\\hadoop-common-2.2.0-bin-master");
-                    conf = new Configuration();
-                    conf.set("fs.defaultFS", "hdfs://192.168.153.132:9000");
-                    conf.set("fs.hdfs.impl", "org.apache.hadoop.hdfs.DistributedFileSystem");
-                    hdfs = FileSystem.get(conf);
-                    return null;
-                }
-            });
+        System.setProperty("hadoop.home.dir", "D:\\Development\\hadoop-common-2.2.0-bin-master");
+        System.load("D:\\Development\\hadoop-common-2.2.0-bin-master\\bin\\hadoop.dll");
+        System.setProperty("HADOOP_USER_NAME", "hadoop");
+
+        Configuration conf = new Configuration();
+        conf.set("fs.defaultFS", "hdfs://192.168.153.132:9000");
+        conf.set("fs.hdfs.impl", "org.apache.hadoop.hdfs.DistributedFileSystem");
+        try {
+            hdfs = FileSystem.get(conf);
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
