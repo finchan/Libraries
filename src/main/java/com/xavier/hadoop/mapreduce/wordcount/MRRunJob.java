@@ -1,4 +1,4 @@
-package com.xavier.hadoop.mapreduce;
+package com.xavier.hadoop.mapreduce.wordcount;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -26,7 +26,9 @@ public class MRRunJob {
             job.setJarByClass(MRRunJob.class);
             job.setMapperClass(WordCountMapper.class);
             job.setReducerClass(WordCountReducer.class);
+            //Map outputkey
             job.setOutputKeyClass(Text.class);
+            //Map outputvalue
             job.setOutputValueClass(IntWritable.class);
             FileInputFormat.addInputPath(job, new Path("/hdfsfiles/mapreduce/wc/input/data/"));
             FileOutputFormat.setOutputPath(job, new Path("/hdfsfiles/mapreduce/wc/output/data/"));
