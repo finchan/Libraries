@@ -1,4 +1,4 @@
-package com.xavier.commonio.ioutils;
+package com.xavier.commonsio.ioutils;
 
 import org.apache.commons.io.IOUtils;
 import java.net.URI;
@@ -9,7 +9,7 @@ public class ReadFromURL {
         try {
             String content = IOUtils.toString(URI.create("http://commons.apache.org"), Charset.forName("iso-8859-1"));
             System.out.println(content);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
