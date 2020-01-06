@@ -1,0 +1,8 @@
+DELIMITER $$
+USE `jdbc` $$
+CREATE PROCEDURE `retrieve_users` ()
+  BEGIN
+    SELECT * FROM USERS;
+  END$$
+DELIMITTER ;
+end $$
